@@ -6,7 +6,7 @@ function create_sse({ max_clients = 1_000, max_connections_per_client = 3 } = {}
   const clients = new Map();
 
   return {
-    connect(client_id) {
+    connect(client_id, on_cancel) {
       if (clients.size >= max_clients) {
         return
       }
@@ -37,6 +37,10 @@ function create_sse({ max_clients = 1_000, max_connections_per_client = 3 } = {}
 
           if (controllers.length === 0) {
             clients.delete(client_id);
+          }
+
+          if (typeof on_cancel === 'function') {
+            on_cancel(client_id, controllers);
           }
         }
       });

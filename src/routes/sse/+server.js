@@ -4,9 +4,11 @@ import sse from "$lib/sse.server.js";
 export async function GET() {
   const id = crypto.randomUUID();
 
-  const stream = sse.connect(id, (id) => {
-    const data = JSON.stringify({ type: 'success', message: `Client ${id} disconnected` });
+  const stream = sse.connect(id, (id, controllers) => {
+    if (controllers.length) return;
     
+    const data = JSON.stringify({ type: 'success', message: `Client ${id} disconnected` });
+
     sse.send_to_all({ event: 'message', data })
   });
 

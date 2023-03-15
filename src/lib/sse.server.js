@@ -59,7 +59,7 @@ function create_sse({ max_clients = 1_000, max_connections_per_client = 3 } = {}
     send_to_all({ event, data, id, retry }) {
       const message = create_message({ event, data, id, retry });
 
-      for (const [client_id, controllers] of clients) {
+      for (const [, controllers] of clients) {
         controllers.forEach(c => c.enqueue(message));
       }
     }

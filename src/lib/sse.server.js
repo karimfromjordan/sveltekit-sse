@@ -44,7 +44,7 @@ function create_sse({ max_clients = 1_000, max_connections_per_client = 3 } = {}
       return stream;
     },
 
-    send(client_id, { event, data, id, retry }) {
+    send_to(client_id, { event, data, id, retry }) {
       const controllers = clients.get(client_id);
 
       if (!controllers) {
@@ -56,7 +56,7 @@ function create_sse({ max_clients = 1_000, max_connections_per_client = 3 } = {}
       controllers.forEach(c => c.enqueue(message));
     },
 
-    sendAll({ event, data, id, retry }) {
+    send_to_all({ event, data, id, retry }) {
       const message = create_message({ event, data, id, retry });
 
       for (const [client_id, controllers] of clients) {

@@ -7,6 +7,6 @@ export const actions = {
 
     const message = JSON.stringify({ type: 'success', message: data.get('message') });
 
-    sse.sendAll({ event: 'message', data: message })
+    sse.send_to_all({ event: 'message', data: message })
   }
 };

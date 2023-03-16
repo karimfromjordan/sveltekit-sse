@@ -7,9 +7,7 @@
 
 	let position = 'start';
 
-	onMount(() => {
-		sse_store.connect('/sse');
-	});
+	export let form;
 
 	$: $sse_store && alerts.show($sse_store);
 </script>
